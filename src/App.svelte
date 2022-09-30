@@ -5,10 +5,10 @@
 	function getAnswer() {
 		let randomIndex = Math.floor(Math.random() * movies.length);
 		interval && clearInterval(interval);
-		question = movies[randomIndex];
+		question = movies[randomIndex].replace('/', '').replace('-', '').replace(':', '').replace(',', '').replace('?', '').replace('!', '').replace('(', '').replace(')', '');
 		const questionParts = question.split(' ');
 
-		if (questionParts.length <= 1) {
+		if (questionParts.length <= 2) {
 			return getAnswer();
 		}
 
@@ -27,7 +27,7 @@
 		document.getElementById('form').reset();
 		answer = '';
 
-		timeout = 10;
+		timeout = 30;
 		document.getElementById('show-answer').disabled = true;
 
 		interval = setInterval(() => {
@@ -50,10 +50,10 @@
 
 		if (question.toLowerCase().trim() == answ.toLowerCase().trim()) {
 			document.getElementById('result').innerHTML = 'Да, это правильный ответ :)';
-			document.getElementById('result').className = 'green';
+			document.getElementById('result').classList.add('green');
 		} else {
 			document.getElementById('result').innerHTML = 'Чуть-чуть не так :(';
-			document.getElementById('result').className = 'red';
+			document.getElementById('result').classList.add('red');
 		}
 	}
 	window.onload = getAnswer;
@@ -82,27 +82,19 @@
 <style>
 	main {
 		text-align: center;
-		padding: 1em;
-		max-width: 240px;
+		padding: 0;
 		margin: 0 auto;
 	}
 
 	h1 {
 		text-transform: uppercase;
-		font-size: 4em;
+		font-size: 3em;
 		font-weight: 100;
 	}
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-	
 	.area {
 		border: 3px solid #ff3e00;
 		color: #ff3e00;
-		width: 500px;
 		height: 100px;
 		font-size: 60px;
 		line-height: 100px;
@@ -113,8 +105,8 @@
 	}
 
 	.content {
-		width: 500px;
 		margin: 0 auto;
+		max-width: 500px;
 	}
 
 	#result {
@@ -135,4 +127,17 @@
 	#result.red {
 		color: rgb(196, 15, 15);
 	}
+	
+	@media (min-width: 640px) {
+		main {
+			max-width: none;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.content {
+			max-width: 390px;
+		}
+	}
+	
 </style>
